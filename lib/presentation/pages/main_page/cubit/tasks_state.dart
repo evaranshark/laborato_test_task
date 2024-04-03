@@ -10,11 +10,11 @@ sealed class TasksState extends Equatable {
 final class TasksInitial extends TasksState {}
 
 final class TasksHasData extends TasksState {
-  final List<TaskEntity> tasks;
 
   const TasksHasData({
     required this.tasks,
   });
+  final List<TaskEntity> tasks;
 }
 
 final class TasksNoData extends TasksState {}

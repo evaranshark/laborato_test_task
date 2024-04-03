@@ -8,4 +8,18 @@ class TaskModel extends HiveObject {
   late String name;
   @HiveField(1)
   late String description;
+  @HiveField(2)
+  late TaskTypeModel type;
+}
+
+@HiveType(typeId: 1)
+enum TaskTypeModel {
+  @HiveField(0)
+  cardio,
+  @HiveField(1)
+  strength,
+  @HiveField(2)
+  balance,
+  @HiveField(3)
+  flexibility,
 }

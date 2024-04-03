@@ -1,26 +1,26 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:laborato_test_task/domain/entities/task.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../domain/entities/task.dart';
 
 import '../../../../domain/repositories/tasks_repository.dart';
 
 part 'tasks_state.dart';
 
 class TasksCubit extends Cubit<TasksState> {
-  final TasksRepository _repo;
   TasksCubit({
     required TasksRepository repository,
   })  : _repo = repository,
         super(TasksInitial());
+  final TasksRepository _repo;
 
-  void addItem(TaskEntity newTask) {
-    _repo.addTask(newTask);
+  Future<void> addItem(TaskEntity newTask) async {
+    await _repo.addTask(newTask);
     emit(TasksUpdated());
   }
 
-  void fetch() {
+  Future<void> fetch() async {
     emit(TasksFetching());
-    final tasks = _repo.getTasks();
+    final tasks = await _repo.fetch();
     if (tasks.isEmpty) {
       emit(TasksNoData());
     } else {
@@ -30,8 +30,8 @@ class TasksCubit extends Cubit<TasksState> {
     }
   }
 
-  void removeItem(TaskEntity entity) {
-    _repo.removeTask(entity);
+  Future<void> removeItem(TaskEntity entity) async {
+    await _repo.removeTask(entity);
     emit(TasksUpdated());
   }
 }

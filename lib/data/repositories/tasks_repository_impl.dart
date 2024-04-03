@@ -1,11 +1,13 @@
-import 'package:laborato_test_task/domain/entities/task.dart';
-import 'package:laborato_test_task/domain/repositories/tasks_repository.dart';
+import '../../domain/entities/task.dart';
+import '../../domain/repositories/tasks_repository.dart';
 
 import '../../domain/tasks_datasource.dart';
+import '../datasource/converters/task_converter.dart';
 
 class TasksRepositoryImpl implements TasksRepository {
-  final TasksDataSource _source;
   TasksRepositoryImpl(TasksDataSource source) : _source = source;
+  final TasksDataSource _source;
+  Iterable<TaskEntity>? _tasks;
 
   @override
   void dispose() {
@@ -13,26 +15,22 @@ class TasksRepositoryImpl implements TasksRepository {
   }
 
   @override
-  void addTask(TaskEntity newTask) {
-    _source.addTask(newTask);
+  Future<void> addTask(TaskEntity newTask) async {
+    await _source.addTask(newTask);
   }
 
   @override
-  List<TaskEntity> getTasks() {
-    final tasks = _source.getTasks();
-    return tasks
-        .map(
-          (e) => TaskEntity(
-            name: e.name,
-            description: e.description,
-            id: e.key,
-          ),
-        )
-        .toList();
+  Future<List<TaskEntity>> fetch() async {
+    final taskModels = await _source.getTasks();
+    final taskConverter = TaskConverter();
+    _tasks = taskModels.map(
+      (e) => taskConverter.fromModel(e),
+    );
+    return _tasks?.toList() ?? [];
   }
 
   @override
-  void removeTask(TaskEntity task) {
-    _source.removeTask(task);
+  Future<void> removeTask(TaskEntity task) async {
+    return await _source.removeTask(task);
   }
 }

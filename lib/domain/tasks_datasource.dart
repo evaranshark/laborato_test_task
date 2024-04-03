@@ -1,9 +1,9 @@
-import 'package:laborato_test_task/data/datasource/models/task_model.dart';
-import 'package:laborato_test_task/domain/datasource.dart';
-import 'package:laborato_test_task/domain/entities/task.dart';
+import '../data/datasource/models/task_model.dart';
+import 'datasource.dart';
+import 'entities/task.dart';
 
 abstract class TasksDataSource implements DataSource {
-  void addTask(TaskEntity task);
-  void removeTask(TaskEntity task);
-  List<TaskModel> getTasks();
+  Future<void> addTask(TaskEntity task);
+  Future<void> removeTask(TaskEntity task);
+  Future<List<TaskModel>> getTasks();
 }

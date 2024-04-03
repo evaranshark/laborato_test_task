@@ -1,11 +1,13 @@
 import 'package:hive/hive.dart';
-import 'package:laborato_test_task/data/datasource/models/task_model.dart';
-import 'package:laborato_test_task/domain/entities/task.dart';
-import 'package:laborato_test_task/domain/tasks_datasource.dart';
+
+import '../../domain/entities/task.dart';
+import '../../domain/tasks_datasource.dart';
+import 'converters/task_converter.dart';
+import 'models/task_model.dart';
 
 class TasksDataSourceImpl implements TasksDataSource {
-  late final Box<TaskModel> _tasksBox;
   TasksDataSourceImpl._();
+  late final Box<TaskModel> _tasksBox;
   static final instance = TasksDataSourceImpl._();
 
   @override
@@ -19,21 +21,19 @@ class TasksDataSourceImpl implements TasksDataSource {
   }
 
   @override
-  void addTask(TaskEntity task) {
-    _tasksBox.add(
-      TaskModel()
-        ..name = task.name
-        ..description = task.description,
+  Future<void> addTask(TaskEntity task) async {
+    await _tasksBox.add(
+      TaskConverter().toModel(task),
     );
   }
 
   @override
-  List<TaskModel> getTasks() {
+  Future<List<TaskModel>> getTasks() async {
     return _tasksBox.values.toList();
   }
 
   @override
-  void removeTask(TaskEntity task) {
-    _tasksBox.delete(task.id!);
+  Future<void> removeTask(TaskEntity task) async {
+    await _tasksBox.delete(task.id!);
   }
 }

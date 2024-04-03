@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:laborato_test_task/data/datasource/models/task_model.dart';
-import 'package:laborato_test_task/presentation/pages/task_page/task_page.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'data/datasource/models/task_model.dart';
 import 'locator.dart';
 import 'presentation/pages/main_page/main_page.dart';
+import 'presentation/pages/task_page/task_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/task': (_) => const TaskPage(),
       },
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Лаборато'),
     );
   }
 }
@@ -36,6 +36,9 @@ Future<void> initServices() async {
   Hive.init(dir.path);
   Hive.registerAdapter<TaskModel>(
     TaskModelAdapter(),
+  );
+  Hive.registerAdapter<TaskTypeModel>(
+    TaskTypeModelAdapter(),
   );
   await setup();
 }
