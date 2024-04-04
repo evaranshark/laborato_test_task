@@ -10,6 +10,8 @@ class TaskModel extends HiveObject {
   late String description;
   @HiveField(2)
   late TaskTypeModel type;
+  @HiveField(3)
+  late DifficultyModel difficulty;
 }
 
 @HiveType(typeId: 1)
@@ -22,4 +24,14 @@ enum TaskTypeModel {
   balance,
   @HiveField(3)
   flexibility,
+}
+
+@HiveType(typeId: 2)
+enum DifficultyModel {
+  @HiveField(0)
+  easy,
+  @HiveField(1)
+  medium,
+  @HiveField(2)
+  hard,
 }

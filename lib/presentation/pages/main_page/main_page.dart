@@ -6,6 +6,7 @@ import '../../../domain/repositories/tasks_repository.dart';
 import '../../../locator.dart';
 import '../task_page/task_page.dart';
 import 'cubit/tasks_cubit.dart';
+import 'widgets/exercise_list_item.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key, required this.title});
@@ -76,18 +77,7 @@ class _Content extends StatelessWidget {
                       onDismissed: (direction) {
                         context.read<TasksCubit>().removeItem(item);
                       },
-                      child: Card(
-                        child: Column(
-                          children: [
-                            Text(
-                              item.name,
-                            ),
-                            Text(
-                              item.description,
-                            ),
-                          ],
-                        ),
-                      ),
+                      child: ExerciseListItem(item: item),
                     );
                   },
                   itemCount: state.tasks.length,

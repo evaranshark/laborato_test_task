@@ -27,6 +27,7 @@ class _AddTaskFormState extends State<_AddTaskForm> {
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   TaskType? _type;
+  Difficulty? _difficulty;
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +38,10 @@ class _AddTaskFormState extends State<_AddTaskForm> {
         child: Column(
           children: [
             TextFormField(
+              textInputAction: TextInputAction.next,
+              textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(
                 labelText: 'Название',
-                border: OutlineInputBorder(),
               ),
               controller: _nameController,
             ),
@@ -47,10 +49,11 @@ class _AddTaskFormState extends State<_AddTaskForm> {
               height: 10.0,
             ),
             TextFormField(
+              textInputAction: TextInputAction.next,
+              textCapitalization: TextCapitalization.sentences,
               maxLines: null,
               decoration: const InputDecoration(
                 labelText: 'Описание',
-                border: OutlineInputBorder(),
               ),
               controller: _descriptionController,
             ),
@@ -58,6 +61,7 @@ class _AddTaskFormState extends State<_AddTaskForm> {
               height: 10.0,
             ),
             DropdownButtonFormField<TaskType>(
+              hint: const Text('Тип упражнения'),
               items: const [
                 DropdownMenuItem(
                   value: TaskType.cardio,
@@ -82,20 +86,47 @@ class _AddTaskFormState extends State<_AddTaskForm> {
                 });
               },
             ),
+            const SizedBox(
+              height: 10.0,
+            ),
+            DropdownButtonFormField<Difficulty>(
+              hint: const Text('Сложность'),
+              items: const [
+                DropdownMenuItem(
+                  value: Difficulty.easy,
+                  child: Text('Низкая'),
+                ),
+                DropdownMenuItem(
+                  value: Difficulty.medium,
+                  child: Text('Средняя'),
+                ),
+                DropdownMenuItem(
+                  value: Difficulty.hard,
+                  child: Text('Высокая'),
+                ),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  _difficulty = value;
+                });
+              },
+            ),
             const Spacer(),
             ElevatedButton(
               onPressed: () {
                 final result = TaskEntity(
-                  name: _nameController.text,
-                  description: _descriptionController.text,
-                  type: _type!,
-                );
+                    name: _nameController.text,
+                    description: _descriptionController.text,
+                    type: _type!,
+                    difficulty: _difficulty!);
                 Navigator.of(context).pop(
                   result,
                 );
               },
-              child: const Text(
-                'Сохранить',
+              child: const Center(
+                child: Text(
+                  'Сохранить',
+                ),
               ),
             ),
           ],

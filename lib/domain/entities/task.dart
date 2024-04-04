@@ -5,12 +5,14 @@ class TaskEntity with EquatableMixin {
     required this.name,
     required this.description,
     required this.type,
+    this.difficulty = Difficulty.medium,
     this.id,
   });
   final String name;
   final String description;
   final TaskType type;
   final dynamic id;
+  final Difficulty difficulty;
 
   @override
   List<Object?> get props => [
@@ -25,4 +27,10 @@ enum TaskType {
   strength,
   balance,
   flexibility,
+}
+
+enum Difficulty {
+  easy,
+  medium,
+  hard,
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -22,6 +24,24 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        textTheme: TextTheme(
+          bodyMedium: GoogleFonts.manrope(
+            fontWeight: FontWeight.w400,
+          ),
+          bodyLarge: GoogleFonts.manrope(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+          headlineMedium: GoogleFonts.manrope(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       ),
       routes: {
         '/task': (_) => const TaskPage(),
@@ -39,6 +59,9 @@ Future<void> initServices() async {
   );
   Hive.registerAdapter<TaskTypeModel>(
     TaskTypeModelAdapter(),
+  );
+  Hive.registerAdapter(
+    DifficultyModelAdapter(),
   );
   await setup();
 }

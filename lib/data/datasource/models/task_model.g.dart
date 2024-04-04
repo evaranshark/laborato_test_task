@@ -19,19 +19,22 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
     return TaskModel()
       ..name = fields[0] as String
       ..description = fields[1] as String
-      ..type = fields[2] as TaskTypeModel;
+      ..type = fields[2] as TaskTypeModel
+      ..difficulty = fields[3] as DifficultyModel;
   }
 
   @override
   void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.description)
       ..writeByte(2)
-      ..write(obj.type);
+      ..write(obj.type)
+      ..writeByte(3)
+      ..write(obj.difficulty);
   }
 
   @override
@@ -90,6 +93,50 @@ class TaskTypeModelAdapter extends TypeAdapter<TaskTypeModel> {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is TaskTypeModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+class DifficultyModelAdapter extends TypeAdapter<DifficultyModel> {
+  @override
+  final int typeId = 2;
+
+  @override
+  DifficultyModel read(BinaryReader reader) {
+    switch (reader.readByte()) {
+      case 0:
+        return DifficultyModel.easy;
+      case 1:
+        return DifficultyModel.medium;
+      case 2:
+        return DifficultyModel.hard;
+      default:
+        return DifficultyModel.easy;
+    }
+  }
+
+  @override
+  void write(BinaryWriter writer, DifficultyModel obj) {
+    switch (obj) {
+      case DifficultyModel.easy:
+        writer.writeByte(0);
+        break;
+      case DifficultyModel.medium:
+        writer.writeByte(1);
+        break;
+      case DifficultyModel.hard:
+        writer.writeByte(2);
+        break;
+    }
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is DifficultyModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

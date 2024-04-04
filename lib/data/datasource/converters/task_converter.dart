@@ -1,6 +1,7 @@
 import '../../../domain/entities/task.dart';
 import '../models/task_model.dart';
 import 'converter.dart';
+import 'difficulty_converter.dart';
 import 'task_type_converter.dart';
 
 class TaskConverter implements Converter<TaskModel, TaskEntity> {
@@ -9,7 +10,12 @@ class TaskConverter implements Converter<TaskModel, TaskEntity> {
     return TaskEntity(
       name: model.name,
       description: model.description,
-      type: TaskTypeConverter().fromModel(model.type),
+      type: TaskTypeConverter().fromModel(
+        model.type,
+      ),
+      difficulty: DifficultyConverter().fromModel(
+        model.difficulty,
+      ),
       id: model.key,
     );
   }
@@ -19,6 +25,7 @@ class TaskConverter implements Converter<TaskModel, TaskEntity> {
     return TaskModel()
       ..name = entity.name
       ..description = entity.description
-      ..type = TaskTypeConverter().toModel(entity.type);
+      ..type = TaskTypeConverter().toModel(entity.type)
+      ..difficulty = DifficultyConverter().toModel(entity.difficulty);
   }
 }
