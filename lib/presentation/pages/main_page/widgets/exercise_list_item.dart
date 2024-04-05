@@ -56,7 +56,6 @@ String getExerciseDifficultyName(BuildContext context, Difficulty diff) =>
 
 class _Type extends StatelessWidget {
   const _Type({
-    super.key,
     required this.type,
   });
 

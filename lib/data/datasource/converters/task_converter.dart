@@ -2,6 +2,7 @@ import '../../../domain/entities/task.dart';
 import '../models/task_model.dart';
 import 'converter.dart';
 import 'difficulty_converter.dart';
+import 'exercise_duration_converter.dart';
 import 'task_type_converter.dart';
 
 class TaskConverter implements Converter<TaskModel, TaskEntity> {
@@ -17,6 +18,7 @@ class TaskConverter implements Converter<TaskModel, TaskEntity> {
         model.difficulty,
       ),
       id: model.key,
+      duration: ExerciseDurationConverter().fromModel(model.duration),
     );
   }
 
@@ -26,6 +28,7 @@ class TaskConverter implements Converter<TaskModel, TaskEntity> {
       ..name = entity.name
       ..description = entity.description
       ..type = TaskTypeConverter().toModel(entity.type)
-      ..difficulty = DifficultyConverter().toModel(entity.difficulty);
+      ..difficulty = DifficultyConverter().toModel(entity.difficulty)
+      ..duration = ExerciseDurationConverter().toModel(entity.duration);
   }
 }

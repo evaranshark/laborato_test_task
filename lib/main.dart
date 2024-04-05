@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'data/datasource/models/exercise_duration_model.dart';
 import 'data/datasource/models/task_model.dart';
 import 'locator.dart';
 import 'presentation/pages/main_page/main_page.dart';
@@ -62,6 +62,12 @@ Future<void> initServices() async {
   );
   Hive.registerAdapter(
     DifficultyModelAdapter(),
+  );
+  Hive.registerAdapter(
+    DurationUnitModelAdapter(),
+  );
+  Hive.registerAdapter(
+    ExerciseDurationModelAdapter(),
   );
   await setup();
 }
