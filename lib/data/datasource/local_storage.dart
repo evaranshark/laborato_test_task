@@ -36,4 +36,9 @@ class TasksDataSourceImpl implements TasksDataSource {
   Future<void> removeTask(TaskEntity task) async {
     await _tasksBox.delete(task.id!);
   }
+
+  @override
+  Future<TaskModel?> getTask(id) async {
+    return _tasksBox.get(id);
+  }
 }

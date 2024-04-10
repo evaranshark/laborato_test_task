@@ -17,7 +17,7 @@ class TaskConverter implements Converter<TaskModel, TaskEntity> {
       difficulty: DifficultyConverter().fromModel(
         model.difficulty,
       ),
-      id: model.key,
+      id: model.key as int,
       duration: ExerciseDurationConverter().fromModel(model.duration),
     );
   }

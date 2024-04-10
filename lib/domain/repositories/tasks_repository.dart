@@ -5,4 +5,7 @@ abstract interface class TasksRepository {
   Future<void> addTask(TaskEntity newTask);
   Future<void> removeTask(TaskEntity task);
   Future<List<TaskEntity>> fetch();
+  Future<TaskEntity> getTask({
+    required int id,
+  });
 }

@@ -20,13 +20,14 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       ..name = fields[0] as String
       ..description = fields[1] as String
       ..type = fields[2] as TaskTypeModel
-      ..difficulty = fields[3] as DifficultyModel;
+      ..difficulty = fields[3] as DifficultyModel
+      ..duration = fields[4] as ExerciseDurationModel;
   }
 
   @override
   void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -34,7 +35,9 @@ class TaskModelAdapter extends TypeAdapter<TaskModel> {
       ..writeByte(2)
       ..write(obj.type)
       ..writeByte(3)
-      ..write(obj.difficulty);
+      ..write(obj.difficulty)
+      ..writeByte(4)
+      ..write(obj.duration);
   }
 
   @override

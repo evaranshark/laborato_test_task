@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain/entities/exercise_duration.dart';
 import '../../../../domain/entities/task.dart';
+import '../../task_page/task_arguments.dart';
 
 class ExerciseListItem extends StatelessWidget {
   const ExerciseListItem({
@@ -13,37 +15,62 @@ class ExerciseListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: _Name(
-                    name: item.name,
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            '/task',
+            arguments: TaskArguments(
+              id: item.id!,
+            ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: _Name(
+                      name: item.name,
+                    ),
                   ),
-                ),
-                _Type(type: item.type),
-              ],
-            ),
-            const Divider(
-              thickness: 2,
-            ),
-            ValueField(
-              title: 'Сложность',
-              value: getExerciseDifficultyName(
-                context,
-                item.difficulty,
+                  _Type(type: item.type),
+                ],
               ),
-            ),
-          ],
+              const Divider(
+                thickness: 2,
+              ),
+              ValueField(
+                title: 'Сложность',
+                value: getExerciseDifficultyName(
+                  context,
+                  item.difficulty,
+                ),
+              ),
+              const SizedBox(
+                height: 10.0,
+              ),
+              ValueField(
+                title: 'Продолжительность',
+                value: buildDurationString(item.duration),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+String buildDurationString(ExerciseDuration duration) {
+  final unit = switch (duration.units) {
+    DurationUnit.min => 'мин',
+    DurationUnit.sec => 'сек',
+  };
+  return '${duration.value} $unit';
 }
 
 ///Takes [context] for future localization

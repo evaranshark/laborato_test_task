@@ -7,6 +7,8 @@ import 'data/datasource/models/exercise_duration_model.dart';
 import 'data/datasource/models/task_model.dart';
 import 'locator.dart';
 import 'presentation/pages/main_page/main_page.dart';
+import 'presentation/pages/task_page/edit_task_page.dart';
+import 'presentation/pages/task_page/task_arguments.dart';
 import 'presentation/pages/task_page/task_page.dart';
 
 void main() async {
@@ -44,7 +46,19 @@ class MyApp extends StatelessWidget {
         ),
       ),
       routes: {
-        '/task': (_) => const TaskPage(),
+        '/task/edit': (_) => const EditTaskPage(),
+      },
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/task':
+            final args = settings.arguments as TaskArguments;
+            return MaterialPageRoute(
+              builder: (_) => TaskPage(
+                id: args.id,
+              ),
+            );
+        }
+        return null;
       },
       home: const MyHomePage(title: 'Лаборато'),
     );

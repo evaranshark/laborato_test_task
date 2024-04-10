@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/entities/task.dart';
 import '../../../domain/repositories/tasks_repository.dart';
 import '../../../locator.dart';
-import '../task_page/task_page.dart';
+import '../task_page/edit_task_page.dart';
 import 'cubit/tasks_cubit.dart';
 import 'widgets/exercise_list_item.dart';
 
@@ -32,7 +32,7 @@ class MyHomePage extends StatelessWidget {
                 final result = await showAdaptiveDialog<TaskEntity>(
                   context: context,
                   builder: (context) => const Dialog.fullscreen(
-                    child: TaskPage(),
+                    child: EditTaskPage(),
                   ),
                 );
                 if (!context.mounted) return;

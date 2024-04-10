@@ -6,4 +6,5 @@ abstract class TasksDataSource implements DataSource {
   Future<void> addTask(TaskEntity task);
   Future<void> removeTask(TaskEntity task);
   Future<List<TaskModel>> getTasks();
+  Future<TaskModel?> getTask(int id);
 }
